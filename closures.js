@@ -9,7 +9,12 @@ module.exports = {
      *  c.next(); // return 5
      */
     counter: function (start) {
-        
+        // Returning an object with a .next() property.
+        return {
+            next: function() {
+                return ++start;
+            },
+        };
     },
 
     /**
@@ -22,7 +27,12 @@ module.exports = {
      *  tot.discount(0.20); // return 16
      */
     total: function (amount) {
-        
+
+        return {
+            discount: function(num) {
+                return amount - (num * amount);
+            },
+        }
     },
 
     /**
@@ -35,8 +45,27 @@ module.exports = {
      *  user.setName('123 hi');         // return false
      *  user.getName();                 // return 'Francis Bacon'
      */
+
+
+    // this one fails, not sure why
     user: function () {
-        
+        name = [];
+        let check = /^[A-Za-z ]+$/;
+        return {
+            setName: function (input) {
+                if(check.test(input) === true) {
+                name.push(input);
+                return true;
+                }
+                return false;
+            },
+
+            getName: function () {
+                if(check.test(name) === true) {
+                    return name;
+                } 
+                },
+        };
     },
 
     /**
@@ -51,6 +80,18 @@ module.exports = {
      *  console.log(lives.left()); // 5
      */
     lives: function (start) {
+        let current = start;
+        return {
+            died: function() {
+                return current--;
+            },
+            left: function() {
+                return current;
+            },
+            restart: function() {
+                current = start;
+            },
+        };
         
     },
 
@@ -65,8 +106,16 @@ module.exports = {
      *  console.log(msg); // '[2] second message'
      */
     messages: function () {
-        
+        count = 0;
+        return {
+            record: function(input) {
+                count++;
+                return '[' + count + '] ' + input;
+            },
+        };
     },
+
+
 
     /**
      * Create a pocket object that can contain COINS and TRINKETS. The pocket
@@ -89,7 +138,30 @@ module.exports = {
      *  console.log(pocket.trinkets()); // 1
      */
     pocket: function (start) {
-        
+        coin = start;
+        trinkets = 0;
+
+        return {
+            buy: function() {
+                if(coin > 9) {
+                trinkets++;
+                coin -= 10;
+                };
+            },
+
+            sell: function() {
+                if(trinkets > 0) {
+                trinkets--;
+                coin += 5;
+                };
+            },
+            coins: function() {
+                return coin;
+            },
+            trinkets: function() {
+                return trinkets;
+            },
+        };
     },
 
     /**
@@ -97,7 +169,23 @@ module.exports = {
      *
      *  multiply(3)(5); // return 15
      */
+
+    // not really understanding this one
     multiply: function (val) {
+
+        return {
+
+        }
         
     },
 };
+
+
+
+
+
+
+// review
+/**
+ * 
+ */
